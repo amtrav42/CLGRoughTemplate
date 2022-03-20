@@ -10,14 +10,14 @@
   --main-font-color: #2b3574;
   --main-secondary-color: #f6eae9;
   --invalid-color: #b40e0e;
-  
-  width: 90%;
-  max-width: 43rem;
-  padding: 1rem;
-  border-radius: 12px;
-  background-color: white;
-  margin: 3rem auto;
+  --background-color: white;
 }
+
+body {
+  margin: 0;
+  background-color: #FFFFFF;
+}
+
 
 * {
   box-sizing: border-box;
