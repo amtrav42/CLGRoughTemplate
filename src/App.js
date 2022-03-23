@@ -5,9 +5,11 @@ import "./App.css";
 
 function App() {
   const [books, setBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchBooksHandler = useCallback(async () => {
+    setIsLoading(true);
     setError(null);
 
     try {
@@ -35,6 +37,7 @@ function App() {
     } catch (error) {
       setError(error.message);
     }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -49,6 +52,10 @@ function App() {
 
   if (error) {
     content = <p>{error}</p>;
+  }
+
+  if (isLoading) {
+    content = <p>Loading...</p>;
   }
 
   return (
