@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import BooksList from "./components/BooksList";
+import AddBook from "./components/AddBook";
 import "./App.css";
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
 
     try {
       const response = await fetch(
-        "https://openlibrary.org/authors/OL23919A/works.json?limit=10"
+        "https://codelikeagirl-a45bc-default-rtdb.firebaseio.com/books.json"
+        // "https://openlibrary.org/authors/OL23919A/works.json?limit=10"
       );
 
       if (response.status === 404) {
@@ -26,14 +28,16 @@ function App() {
       const data = await response.json();
       console.log(response);
 
-      const transformedBooks = data.entries.map((bookData, index) => {
-        console.log("bookData", bookData);
-        return {
-          key: bookData.key,
-          name: bookData.title,
-        };
-      });
-      setBooks(transformedBooks);
+      const loadedBooks = [];
+
+      for (const key in data) {
+        loadedBooks.push({
+          id: key,
+          title: data[key].title,
+          openingText: data[key].openingText,
+        });
+      }
+      setBooks(loadedBooks);
     } catch (error) {
       setError(error.message);
     }
@@ -43,6 +47,21 @@ function App() {
   useEffect(() => {
     fetchBooksHandler();
   }, [fetchBooksHandler]);
+
+  const addBookHandler = async (book) => {
+    console.log(book);
+    const response = await fetch(
+      "https://codelikeagirl-a45bc-default-rtdb.firebaseio.com/books.json",
+      {
+        method: "POST",
+        body: JSON.stringify(book),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+  };
 
   let content = <p>No books found</p>;
 
@@ -61,8 +80,11 @@ function App() {
   return (
     <React.Fragment>
       <section>
+        <AddBook onAddBook={addBookHandler} />
+      </section>
+      <section>
         <button onClick={fetchBooksHandler}>
-          Search for J.K Rowling's work
+          Search for books
         </button>
       </section>
       <section>{content}</section>

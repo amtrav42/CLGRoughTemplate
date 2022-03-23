@@ -12,7 +12,7 @@ const BooksList = (props) => {
     <section>
       <ul className={classes["books-list"]}>
         {props.books.map((book) => (
-          <Book key={book.key} name={book.name} />
+          <Book key={book.key} name={book.title} />
         ))}
       </ul>
     </section>
