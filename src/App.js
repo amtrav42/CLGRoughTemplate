@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import BooksList from "./components/BooksList";
 import "./App.css";
@@ -6,19 +6,30 @@ import "./App.css";
 function App() {
   const [books, setBooks] = useState([]);
 
-  async function fetchBooksHandler() {
+  const fetchBooksHandler = useCallback(async () => {
     const response = await fetch(
       "https://openlibrary.org/authors/OL23919A/works.json?limit=10"
     );
+
     const data = await response.json();
+
     const transformedBooks = data.entries.map((bookData, index) => {
-      console.log("bookData", bookData);
       return {
         key: bookData.key,
         name: bookData.title,
       };
     });
     setBooks(transformedBooks);
+  }, []);
+
+  useEffect(() => {
+    fetchBooksHandler();
+  }, [fetchBooksHandler]);
+
+  let content = <p>No books found</p>;
+
+  if (books.length > 0) {
+    content = <BooksList books={books} />;
   }
 
   return (
@@ -28,7 +39,7 @@ function App() {
           Search for J.K Rowling's work
         </button>
       </section>
-      <BooksList books={books} />
+      <section>{content}</section>
     </React.Fragment>
   );
 }
