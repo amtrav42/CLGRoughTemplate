@@ -1,32 +1,36 @@
-import { Route, Switch } from "react-router-dom";
+import React, { useState } from "react";
 
-import Home from "./components/pages/Home";
-import About from "./components/pages/About";
-import Products from "./components/pages/Products";
-import ProductsDetail from "./components/pages/ProductsDetail";
-import MainHeader from "./components/mainHeader/MainHeader";
+import BooksList from "./components/BooksList";
+import "./App.css";
 
 function App() {
+  const [books, setBooks] = useState([]);
+
+  function fetchBooksHandler() {
+    fetch("https://openlibrary.org/authors/OL23919A/works.json?limit=10")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log({ data });
+        const transformedBooks = data.entries.map((bookData, index) => {
+          console.log("bookData", bookData);
+          return {
+            key: bookData.key,
+            name: bookData.title,
+          };
+        });
+        setBooks(transformedBooks);
+      });
+  }
+
   return (
-    <div className="app">
-      <MainHeader />
-      <main>
-        <Switch>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/products" exact>
-            <Products />
-          </Route>
-          <Route path="/products/:productId">
-            <ProductsDetail />
-          </Route>
-        </Switch>
-      </main>
-    </div>
+    <React.Fragment>
+      <section>
+        <button onClick={fetchBooksHandler}>Search for J.K Rowling's work</button>
+      </section>
+        <BooksList books={books} />
+    </React.Fragment>
   );
 }
 
