@@ -1,74 +1,41 @@
-import React, { useCallback, useEffect, useState } from "react";
-
-import BooksList from "./components/BooksList";
-import LoadingSpinner from "./components/LoadingSpinner";
-import Button from "./components/Button";
+import React, { useContext } from "react";
+import { ThemeContext } from "./components/ThemeProvider";
+import SwitchButton from "./components/Button";
 import "./App.css";
 
 function App() {
-  const [books, setBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const fetchBooksHandler = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch(
-        "https://openlibrary.org/authors/OL23919A/works.json?limit=10"
-      );
-
-      if (response.status === 404) {
-        console.log("Hello", response);
-        setError(true);
-        throw new Error("Something went wrong");
-      }
-
-      const data = await response.json();
-      console.log(response);
-
-      const transformedBooks = data.entries.map((bookData, index) => {
-        console.log("bookData", bookData);
-        return {
-          key: bookData.key,
-          name: bookData.title,
-        };
-      });
-      setBooks(transformedBooks);
-    } catch (error) {
-      setError(error.message);
-    }
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchBooksHandler();
-  }, [fetchBooksHandler]);
-
-  let content = <p>No books found</p>;
-
-  if (books.length > 0) {
-    content = <BooksList books={books} />;
-  }
-
-  if (error) {
-    content = <p>{error}</p>;
-  }
-
-  if (isLoading) {
-    content = <LoadingSpinner />;
-  }
-
+  const theme = useContext(ThemeContext);
+  const darkMode = theme.darkMode;
   return (
-    <React.Fragment>
-      <section>
-        <Button onClick={fetchBooksHandler}>
-          Search for J.K Rowling's work
-        </Button>
-      </section>
-      <section>{content}</section>
-    </React.Fragment>
+    <div className={`bg ${darkMode ? "bg-dark" : "bg-light"}`}>
+      <SwitchButton />
+      <h1 className={`heading ${darkMode ? "heading-dark" : "heading-light"}`}>
+        {darkMode ? "It's a dark theme!" : "It's a light theme!"}
+      </h1>
+
+      <p className={`para ${darkMode ? "para-dark" : "para-light"}`}>
+        Cupcake ipsum dolor sit amet. Oat cake sweet roll soufflé cookie pudding
+        dessert chocolate. Lemon drops cotton candy sugar plum tootsie roll cake
+        bear claw chupa chups jujubes. Cupcake ice cream wafer lemon drops wafer
+        chocolate cake marshmallow dragée. Croissant liquorice candy canes wafer
+        oat cake carrot cake oat cake fruitcake. Cake pudding jelly macaroon
+        shortbread. Bear claw icing dessert marshmallow caramels gummies. Bonbon
+        gummies soufflé toffee lemon drops apple pie tiramisu. Jelly jelly wafer
+        pudding bonbon. Caramels fruitcake lollipop tiramisu sweet roll. Topping
+        cookie chocolate lollipop marshmallow cupcake liquorice sugar plum
+        croissant. Jelly-o bonbon icing candy dragée. Jelly beans cupcake
+        tootsie roll cotton candy shortbread danish wafer lollipop cake. Jelly-o
+        halvah tootsie roll muffin wafer cake fruitcake. Muffin toffee jelly
+        tootsie roll powder. Croissant cupcake pastry jelly lollipop oat cake.
+        Lollipop lollipop oat cake cotton candy powder halvah. Powder marzipan
+        cake soufflé cake topping croissant cookie apple pie. Oat cake chocolate
+        cake chocolate chocolate cake donut gingerbread oat cake cupcake
+        gummies. Brownie caramels chocolate macaroon sesame snaps caramels
+        tiramisu danish. Macaroon danish gingerbread jelly-o soufflé chocolate
+        candy canes pie sugar plum. Marzipan bonbon jelly pudding gingerbread
+        chocolate bar cupcake marshmallow jujubes.
+      </p>
+    </div>
   );
 }
 
