@@ -1,26 +1,29 @@
+@import-normalize;
+
+:root {
+  --main-color: #2b3574;
+  --main-bg-color: white;
+  --main-font-family: "pdu-regular", arial;
+  --main-font-weight: normal;
+  --main-font-size: 0.75rem;
+  --main-border-color: #2b3574;
+  --main-font-color: #2b3574;
+  --main-secondary-color: #f6eae9;
+  --invalid-color: #b40e0e;
+  --background-color: white;
+}
+
+h2 {
+  color: var(--main-font-color);
+  padding: 0;
+}
+
 section {
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   width: 90%;
   max-width: 40rem;
   text-align: center;
-  background-color: white;
-  padding: 2rem;
+  background-color: var(--main-bg-color);
+  padding: 1rem;
   border-radius: 12px;
-}
-
-button {
-  font: inherit;
-  cursor: pointer;
-  background: #230052;
-  border: 1px solid #230052;
-  color: white;
-  padding: 0.75rem 2rem;
-  border-radius: 20px;
-}
-
-button:hover,
-button:active {
-  background-color: white;
-  border-color: black;
-  color: #230052;
 }

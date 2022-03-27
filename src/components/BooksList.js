@@ -1,7 +1,7 @@
 import React from "react";
 
 import Book from "./Book";
-import classes from "./Book.module.css";
+import styles from "./BooksList.module.css";
 
 const BooksList = (props) => {
   if (props.books.length === 0) {
@@ -10,7 +10,7 @@ const BooksList = (props) => {
 
   return (
     <section>
-      <ul className={classes["books-list"]}>
+      <ul className={styles["books-list"]}>
         {props.books.map((book) => (
           <Book key={book.key} name={book.name} />
         ))}

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import BooksList from "./components/BooksList";
 import LoadingSpinner from "./components/LoadingSpinner";
+import Button from "./components/Button";
 import "./App.css";
 
 function App() {
@@ -62,10 +63,9 @@ function App() {
   return (
     <React.Fragment>
       <section>
-        <button onClick={fetchBooksHandler}>
+        <Button onClick={fetchBooksHandler}>
           Search for J.K Rowling's work
-        </button>
-        {/* <LoadingSpinner /> */}
+        </Button>
       </section>
       <section>{content}</section>
     </React.Fragment>
