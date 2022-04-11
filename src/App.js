@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Route, Switch } from "react-router-dom";
 import { ThemeContext } from "./store/theme-context";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
 import AuthContext from "./store/auth-context";
+import BookPage from "../src/components/Pages/Books/BookPage";
 import "./App.css";
 
 function App() {
@@ -40,8 +42,16 @@ function App() {
     >
       <MainHeader onLogout={logoutHandler} />
       <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
+        <Switch>
+          <Route path="/books">
+            {isLoggedIn && <BookPage onLogout={logoutHandler} />}
+            {/* {!isLoggedIn && <Login onLogin={loginHandler} />} */}
+          </Route>
+          <Route path="/">
+            {isLoggedIn && <Home onLogout={logoutHandler} />}
+            {!isLoggedIn && <Login onLogin={loginHandler} />}
+          </Route>
+        </Switch>
       </main>
     </AuthContext.Provider>
   );
