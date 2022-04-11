@@ -27,6 +27,7 @@ const passwordReducer = (state, action) => {
 
 const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
+  const [name, setName] = useState("");
 
   const theme = useContext(ThemeContext);
 
@@ -56,6 +57,10 @@ const Login = (props) => {
     dispatchEmail({ type: "USER_INPUT", val: event.target.value });
   };
 
+  const nameChangeHandler = (event) => {
+    setName(event.target.value);
+  };
+
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: "USER_INPUT", val: event.target.value });
   };
@@ -70,7 +75,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    props.onLogin(emailState.value, passwordState.value, name);
   };
 
   return (
@@ -78,6 +83,25 @@ const Login = (props) => {
       className={`${classes.login} ${theme.darkMode ? "bg-dark" : "bg-light"}`}
     >
       <form onSubmit={submitHandler}>
+        <div
+          className={`${classes.control} ${
+            emailState.isValid === false ? classes.invalid : ""
+          }`}
+        >
+          <label
+            className={`${theme.darkMode ? "para-dark" : "para-light"}`}
+            htmlFor="text"
+          >
+            Name
+          </label>
+          <input
+            type="text"
+            id="text"
+            value={name}
+            onChange={nameChangeHandler}
+            // onBlur={validateEmailHandler}
+          />
+        </div>
         <div
           className={`${classes.control} ${
             emailState.isValid === false ? classes.invalid : ""
