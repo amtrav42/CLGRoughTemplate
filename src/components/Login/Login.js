@@ -99,7 +99,6 @@ const Login = (props) => {
             id="text"
             value={name}
             onChange={nameChangeHandler}
-            // onBlur={validateEmailHandler}
           />
         </div>
         <div
@@ -146,7 +145,7 @@ const Login = (props) => {
             className={classes.btn}
             disabled={!formIsValid}
             title={"Login"}
-          />
+          />=
         </div>
       </form>
     </Card>

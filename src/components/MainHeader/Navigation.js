@@ -13,7 +13,6 @@ const Navigation = (props) => {
         {ctx.isLoggedIn && (
           <li>
             <BasicButton onClick={props.onLogout} title="Logout"/>
-            {/* <button className=navigationButton onClick={props.onLogout}>Logout</button> */}
           </li>
         )}
       </ul>

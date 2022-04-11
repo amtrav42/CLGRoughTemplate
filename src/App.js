@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import { ThemeContext } from "./store/theme-context";
+import React, { useEffect, useState } from "react";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
 import AuthContext from "./store/auth-context";
+import { ThemeProvider } from "./store/theme-context";
+
 import "./App.css";
 
 function App() {
-  const theme = useContext(ThemeContext);
-  const darkMode = theme.darkMode;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [name, setName] = useState("");
 
@@ -32,18 +31,20 @@ function App() {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: isLoggedIn,
-        name: name,
-      }}
-    >
-      <MainHeader onLogout={logoutHandler} />
-      <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
-      </main>
-    </AuthContext.Provider>
+    <ThemeProvider>
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: isLoggedIn,
+          name: name,
+        }}
+      >
+        <MainHeader onLogout={logoutHandler} />
+        <main>
+          {!isLoggedIn && <Login onLogin={loginHandler} />}
+          {isLoggedIn && <Home onLogout={logoutHandler} />}
+        </main>
+      </AuthContext.Provider>
+    </ThemeProvider>
   );
 }
 
