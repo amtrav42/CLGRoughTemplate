@@ -9,7 +9,7 @@ import AuthContext from "../../store/auth-context";
 
 const Home = (props) => {
   const theme = useContext(ThemeContext);
-  const { name } = useContext(AuthContext);
+  const { name, onLogout } = useContext(AuthContext);
   
   return (
     <Card
@@ -18,7 +18,7 @@ const Home = (props) => {
       <h1 className={`${theme.darkMode ? "para-dark" : "para-light"}`}>
         Welcome back {name}!
       </h1>
-      <Button onClick={props.onLogout} title={"Logout"} />
+      <Button onClick={onLogout} title={"Logout"} />
     </Card>
   );
 };

@@ -31,24 +31,33 @@ function App() {
     setIsLoggedIn(false);
   };
 
+  const loggedRoutes = (
+    <>
+      <Route path="/books" component={BookPage} />
+      <Route path="/" exact component={Home} />
+    </>
+  );
+
+  const notLoggedInRoutes = (
+    <>
+      <Route path="/" exact component={Login} />
+    </>
+  );
+
   return (
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
         name: name,
+        onLogout: logoutHandler,
+        onLogin: loginHandler,
       }}
     >
       <MainHeader onLogout={logoutHandler} />
       <main>
         <Switch>
-          <Route path="/books">
-            {isLoggedIn && <BookPage onLogout={logoutHandler} />}
-            {/* {!isLoggedIn && <Login onLogin={loginHandler} />} */}
-          </Route>
-          <Route path="/">
-            {isLoggedIn && <Home onLogout={logoutHandler} />}
-            {!isLoggedIn && <Login onLogin={loginHandler} />}
-          </Route>
+          {isLoggedIn && loggedRoutes}
+          {!isLoggedIn && notLoggedInRoutes}
         </Switch>
       </main>
     </AuthContext.Provider>

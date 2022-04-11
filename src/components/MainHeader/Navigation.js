@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import AuthContext from "../../store/auth-context";
 import BasicButton from "../Button/BasicButton";
 import classes from "./Navigation.module.css";
+import { Link } from "react-router-dom";
 
 const Navigation = (props) => {
   const ctx = useContext(AuthContext);
@@ -13,10 +14,10 @@ const Navigation = (props) => {
         {ctx.isLoggedIn && (
           <>
             <li>
-              <a href="/books">Books</a>
+              <Link to="/books">Books</Link>
             </li>
             <li>
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <BasicButton onClick={props.onLogout} title="Logout" />
