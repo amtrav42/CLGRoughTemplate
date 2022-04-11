@@ -99,7 +99,6 @@ const Login = (props) => {
             id="text"
             value={name}
             onChange={nameChangeHandler}
-            // onBlur={validateEmailHandler}
           />
         </div>
         <div

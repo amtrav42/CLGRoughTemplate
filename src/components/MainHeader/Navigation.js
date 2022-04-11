@@ -16,6 +16,9 @@ const Navigation = (props) => {
               <a href="/books">Books</a>
             </li>
             <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
               <BasicButton onClick={props.onLogout} title="Logout" />
             </li>
           </>

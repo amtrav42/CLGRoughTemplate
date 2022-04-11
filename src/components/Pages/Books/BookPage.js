@@ -9,28 +9,36 @@ const BookPage = () => {
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchText, setSearchText] = useState("");
 
-  console.log("Anything");
+  const searchTextChangeHandler = (event) => {
+    setSearchText(event.target.value);
+  };
 
   const fetchBooksHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
+    console.log(searchText);
     try {
       const response = await fetch(
-        "https://openlibrary.org/authors/OL23919A/works.json?limit=10"
+        //NO CORS issues
+        // "https://openlibrary.org/authors/OL23919A/works.json?limit=10"
+
+        //CORS ISSUES
+        `http://openlibrary.org/search.json?author=${searchText}`
       );
 
+      console.log(response);
+
       if (response.status === 404) {
-        console.log("Hello", response);
         setError(true);
         throw new Error("Something went wrong");
       }
 
       const data = await response.json();
-      console.log(response);
 
-      const transformedBooks = data.entries.map((bookData, index) => {
+      const transformedBooks = data.docs.map((bookData, index) => {
         console.log("bookData", bookData);
         return {
           key: bookData.key,
@@ -42,7 +50,7 @@ const BookPage = () => {
       setError(error.message);
     }
     setIsLoading(false);
-  }, []);
+  }, [searchText]);
 
   useEffect(() => {
     fetchBooksHandler();
@@ -65,13 +73,20 @@ const BookPage = () => {
   return (
     <React.Fragment>
       <section className={classes["container"]}>
+        <input
+          className={classes["search-input"]}
+          type="text"
+          value={searchText}
+          onChange={searchTextChangeHandler}
+        />
         <Button
           onClick={fetchBooksHandler}
           className={classes["search-button"]}
-          title="Search for J.K Rowling's work"
+          // title="Search for J.K Rowling's work"
+          title="Search for Authors work"
         ></Button>
+        <section>{content}</section>
       </section>
-      <section>{content}</section>
     </React.Fragment>
   );
 };

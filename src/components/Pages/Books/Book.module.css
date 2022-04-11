@@ -10,6 +10,16 @@
 .container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.search-input {
+  width: 50%;
+  height: 25px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .search-button {
