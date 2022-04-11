@@ -9,8 +9,6 @@ import BookPage from "../src/components/Pages/Books/BookPage";
 import "./App.css";
 
 function App() {
-  const theme = useContext(ThemeContext);
-  const darkMode = theme.darkMode;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [name, setName] = useState("");
 

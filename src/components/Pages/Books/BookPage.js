@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 
 import BooksList from "./BooksList";
 import LoadingSpinner from "./LoadingSpinner";
 import Button from "../../Button/BasicButton";
 import classes from "./Book.module.css";
 
+import { ThemeContext } from "../../../store/theme-context";
+
 const BookPage = () => {
+  const theme = useContext(ThemeContext);
+
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,10 +26,8 @@ const BookPage = () => {
     console.log(searchText);
     try {
       const response = await fetch(
-        //NO CORS issues
         // "https://openlibrary.org/authors/OL23919A/works.json?limit=10"
 
-        //CORS ISSUES
         `http://openlibrary.org/search.json?author=${searchText}`
       );
 
@@ -52,10 +54,6 @@ const BookPage = () => {
     setIsLoading(false);
   }, [searchText]);
 
-  useEffect(() => {
-    fetchBooksHandler();
-  }, [fetchBooksHandler]);
-
   let content = <p>No books found</p>;
 
   if (books.length > 0) {
@@ -81,7 +79,10 @@ const BookPage = () => {
         />
         <Button
           onClick={fetchBooksHandler}
-          className={classes["search-button"]}
+          className={`${classes["search-button"]} ${
+            theme.darkMode ? "bg-dark" : "bg-light"
+          }`}
+          // className={classes["search-button"] ${theme.darkMode ? "bg-dark" : "bg-light"}`}
           // title="Search for J.K Rowling's work"
           title="Search for Authors work"
         ></Button>
