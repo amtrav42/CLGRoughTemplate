@@ -28,6 +28,7 @@ const passwordReducer = (state, action) => {
 
 const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
+  //initial value is the value from the context
   const [name, setName] = useState("");
 
   const { onLogin } = useContext(AuthContext);

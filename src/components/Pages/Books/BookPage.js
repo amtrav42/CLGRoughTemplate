@@ -27,7 +27,6 @@ const BookPage = () => {
     try {
       const response = await fetch(
         // "https://openlibrary.org/authors/OL23919A/works.json?limit=10"
-
         `http://openlibrary.org/search.json?author=${searchText}`
       );
 
@@ -82,7 +81,6 @@ const BookPage = () => {
           className={`${classes["search-button"]} ${
             theme.darkMode ? "bg-dark" : "bg-light"
           }`}
-          // className={classes["search-button"] ${theme.darkMode ? "bg-dark" : "bg-light"}`}
           // title="Search for J.K Rowling's work"
           title="Search for Authors work"
         ></Button>
